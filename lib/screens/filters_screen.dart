@@ -44,17 +44,30 @@ class _FiltersScreenState extends State<FiltersScreen> {
         appBar: AppBar(
           title: Text('Your Filters'),
           actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.save),
-              onPressed: () {
-                final selectedFilters = {
-                  'gluten': _glutenFree,
-                  'lactose': _lactoseFree,
-                  'vegan': _vegan,
-                  'vegetarian': _vegetarian,
-                };
-                widget.saveFilters(selectedFilters);
-              },
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.save),
+                onPressed: () {
+                  final selectedFilters = {
+                    'gluten': _glutenFree,
+                    'lactose': _lactoseFree,
+                    'vegan': _vegan,
+                    'vegetarian': _vegetarian,
+                  };
+                  widget.saveFilters(selectedFilters);
+                  final snackBar = SnackBar(
+                    content: Text('Filters saved.'),
+                    duration: Duration(seconds: 3),
+                    action: SnackBarAction(
+                      label: 'HIDE',
+                      onPressed: () {
+                        Scaffold.of(context).hideCurrentSnackBar();
+                      },
+                    ),
+                  );
+                  Scaffold.of(context).showSnackBar(snackBar);
+                },
+              ),
             ),
           ],
         ),
